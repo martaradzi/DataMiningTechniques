@@ -319,7 +319,6 @@ time,variable,value
 2014-04-01 09:00:00.000,circumplex.arousal,-1
 2014-04-01 12:00:00.000,circumplex.arousal,0
 2014-04-01 15:00:00.000,circumplex.arousal,0
-2014-04-01 19:00:00.000,circumplex.arousal,NA
 2014-04-01 21:00:00.000,circumplex.arousal,1
 2014-04-02 09:00:00.000,circumplex.arousal,0
 2014-04-02 12:00:00.000,circumplex.arousal,1
@@ -373,7 +372,6 @@ time,variable,value
 2014-04-12 18:00:00.000,circumplex.arousal,-2
 2014-04-12 21:00:00.000,circumplex.arousal,-1
 2014-04-13 09:00:00.000,circumplex.arousal,-1
-2014-04-13 13:00:00.000,circumplex.arousal,NA
 2014-04-13 17:00:00.000,circumplex.arousal,1
 2014-04-13 21:00:00.000,circumplex.arousal,1
 2014-04-14 09:00:00.000,circumplex.arousal,-1
@@ -428,7 +426,6 @@ time,variable,value
 2014-04-24 10:00:00.000,circumplex.arousal,-2
 2014-04-24 12:00:00.000,circumplex.arousal,-1
 2014-04-24 15:00:00.000,circumplex.arousal,1
-2014-04-24 18:00:00.000,circumplex.arousal,NA
 2014-04-24 21:00:00.000,circumplex.arousal,-1
 2014-04-25 10:00:00.000,circumplex.arousal,-2
 2014-04-25 12:00:00.000,circumplex.arousal,-1
@@ -560,7 +557,6 @@ time,variable,value
 2014-04-01 09:00:00.000,circumplex.valence,1
 2014-04-01 12:00:00.000,circumplex.valence,1
 2014-04-01 15:00:00.000,circumplex.valence,1
-2014-04-01 19:00:00.000,circumplex.valence,NA
 2014-04-01 21:00:00.000,circumplex.valence,1
 2014-04-02 09:00:00.000,circumplex.valence,1
 2014-04-02 12:00:00.000,circumplex.valence,1
@@ -614,7 +610,6 @@ time,variable,value
 2014-04-12 18:00:00.000,circumplex.valence,1
 2014-04-12 21:00:00.000,circumplex.valence,1
 2014-04-13 09:00:00.000,circumplex.valence,1
-2014-04-13 13:00:00.000,circumplex.valence,NA
 2014-04-13 17:00:00.000,circumplex.valence,1
 2014-04-13 21:00:00.000,circumplex.valence,1
 2014-04-14 09:00:00.000,circumplex.valence,0
@@ -659,7 +654,6 @@ time,variable,value
 2014-04-22 09:00:00.000,circumplex.valence,1
 2014-04-22 12:00:00.000,circumplex.valence,1
 2014-04-22 15:00:00.000,circumplex.valence,1
-2014-04-22 19:00:00.000,circumplex.valence,NA
 2014-04-22 23:00:00.000,circumplex.valence,1
 2014-04-23 09:00:00.000,circumplex.valence,1
 2014-04-23 12:00:00.000,circumplex.valence,1
@@ -669,7 +663,6 @@ time,variable,value
 2014-04-24 10:00:00.000,circumplex.valence,1
 2014-04-24 12:00:00.000,circumplex.valence,1
 2014-04-24 15:00:00.000,circumplex.valence,1
-2014-04-24 18:00:00.000,circumplex.valence,NA
 2014-04-24 21:00:00.000,circumplex.valence,1
 2014-04-25 10:00:00.000,circumplex.valence,1
 2014-04-25 12:00:00.000,circumplex.valence,1

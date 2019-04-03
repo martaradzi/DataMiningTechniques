@@ -453,7 +453,6 @@ time,variable,value
 2014-04-05 18:00:00.000,circumplex.arousal,-1
 2014-04-05 22:00:00.000,circumplex.arousal,2
 2014-04-06 11:00:00.000,circumplex.arousal,1
-2014-04-06 12:00:00.000,circumplex.arousal,NA
 2014-04-06 15:00:00.000,circumplex.arousal,-1
 2014-04-06 18:00:00.000,circumplex.arousal,-1
 2014-04-06 21:00:00.000,circumplex.arousal,1
@@ -752,7 +751,6 @@ time,variable,value
 2014-04-05 18:00:00.000,circumplex.valence,1
 2014-04-05 22:00:00.000,circumplex.valence,2
 2014-04-06 11:00:00.000,circumplex.valence,1
-2014-04-06 12:00:00.000,circumplex.valence,NA
 2014-04-06 15:00:00.000,circumplex.valence,1
 2014-04-06 18:00:00.000,circumplex.valence,1
 2014-04-06 21:00:00.000,circumplex.valence,2
@@ -846,7 +844,6 @@ time,variable,value
 2014-04-25 09:00:00.000,circumplex.valence,0
 2014-04-25 12:00:00.000,circumplex.valence,1
 2014-04-25 15:00:00.000,circumplex.valence,0
-2014-04-25 18:00:00.000,circumplex.valence,NA
 2014-04-25 22:00:00.000,circumplex.valence,1
 2014-04-26 10:00:00.000,circumplex.valence,0
 2014-04-26 13:00:00.000,circumplex.valence,0
