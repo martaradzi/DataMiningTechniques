@@ -6,6 +6,7 @@ output:
   pdf_document: default
   html_document: default
 ---
+
 Get path 
 
 ```{r}
@@ -16,7 +17,7 @@ getwd()
 ##This makes corelation 
 
 installing packages for correlation 
-```{r}
+```{r include=FALSE}
 install.packages("corrplot")
 ```
 
@@ -29,10 +30,18 @@ stats[1] <- NULL
 
 ```{r}
 library(corrplot)
-M<-cor(imputed)
+M<-cor(stats)
 corrplot(M, method="color") # fill matrix
 corrplot(M, type="lower") #half matrix
-write.table(M, file = "dataCorrelation.csv", sep = ", ", row.names=FALSE) #print into csv
+write.table(M, file = "dataCorrelation.csv", sep = ", ", col.names=NA) #print into csv
+```
+
+I wanna make a histogram of frequencies 
+```{r}
+freq <- read.csv("AllStatsFrequency.csv")
+freq[1] <- NULL
+
+write.table(colSums(freq), file = "freq.csv", sep = ", ", row.names=FALSE) #print into csv
 ```
 
 
