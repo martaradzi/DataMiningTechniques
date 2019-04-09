@@ -1,0 +1,162 @@
+---
+title: "Data imputation"
+author: "Marta"
+date: "April 9, 2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+Clean up global variables (used for debuggining)
+```{r}
+rm(list=ls())
+```
+
+
+Package used for the stochatic regression imputtion is called mice. (takes a bit of time but needed to do that every time)
+```{r  include=FALSE}
+install.packages("mice")
+
+```
+
+Reading in the data. Don't know how to do all at once so I'll do that later
+
+```{r}
+stats <- read.csv("01_compressed.csv", header=TRUE, sep=",")
+
+#head(stats)
+```
+
+Check data for missing values
+
+```{r}
+sapply(stats, function(x) sum(is.na(x)))
+```
+
+Setting each vatiable. (need to install that package here. Might not work the first time you run, just run again, its the installation problem)
+
+```{r}
+install.packages("dplyr")
+library(dplyr) 
+stats <- stats %>%
+    mutate(
+        time = as.Date(time),
+        mood = as.numeric(mood),
+        circumplex.arousal = as.numeric( circumplex.arousal),
+        circumplex.valence = as.numeric(circumplex.valence),
+        activity = as.numeric(activity),
+        screen = as.numeric(screen),
+        call = as.numeric(call),
+        sms = as.numeric(sms),
+        appCat.builtin = as.numeric(appCat.builtin),
+        appCat.communication = as.numeric(appCat.communication),
+        appCat.entertainment = as.numeric(appCat.entertainment),
+        appCat.finance  = as.numeric(appCat.finance ),
+        appCat.game = as.numeric(appCat.game),
+        appCat.office = as.numeric(appCat.office),
+        appCat.other = as.numeric(appCat.other),
+        appCat.social = as.numeric(appCat.social),
+        appCat.travel  = as.numeric(appCat.travel ),
+        appCat.unknown = as.numeric(appCat.unknown),
+        appCat.utilities = as.numeric(appCat.utilities),
+        appCat.utilities   = as.numeric(appCat.utilities ),
+        appCat.weather = as.numeric(appCat.weather),
+        day_0 = as.integer(day_0),
+        day_1 = as.integer(day_1),
+        day_2 = as.integer(day_2),
+        day_3 = as.integer(day_3),
+        day_4 = as.integer(day_4),
+        day_5 = as.integer(day_5),
+        day_6 = as.integer(day_6)
+                                        
+    )
+```
+
+Just to check if everything is correct
+
+```{r}
+str(stats)
+```
+select the variable to not be included as predictor during imputation.
+```{r}
+library(mice)
+
+init = mice(stats, maxit=0) 
+meth = init$method
+predM = init$predictorMatrix
+```
+
+Don't take this under consideration while predicting data:
+
+```{r}
+predM[, c("time")]=0
+predM[, c("day_0")]=0
+predM[, c("day_1")]=0
+predM[, c("day_2")]=0
+predM[, c("day_3")]=0
+predM[, c("day_4")]=0
+predM[, c("day_5")]=0
+predM[, c("day_6")]=0
+```
+
+Skipping variable for imputing - YOU MIGHT NEED TO ADD SOMETHING HERE
+
+```{r}
+meth[c("appCat.weather")]=""
+```
+
+Setting method for imputing - choose which method do you want the variables to be predicted with
+
+```{r} 
+meth[c("mood")]="norm.predict" 
+meth[c("circumplex.arousal")]="norm.boot" 
+meth[c("circumplex.valence")]="norm.boot"
+meth[c("activity")]="norm.boot" 
+meth[c("screen")]="norm.boot" 
+meth[c("call")]="norm.boot"
+meth[c("sms")]="norm.boot" 
+meth[c("appCat.builtin")]="norm.boot" 
+meth[c("appCat.communication")]="norm.boot"
+meth[c("appCat.entertainment")]="norm.boot" 
+meth[c("appCat.finance")]="norm.boot" 
+meth[c("appCat.game")]="norm.boot"
+meth[c("appCat.office")]="norm.boot" 
+meth[c("appCat.other")]="norm.boot" 
+meth[c("appCat.social")]="norm.boot"
+meth[c("appCat.travel")]="norm.boot" 
+meth[c("appCat.unknown")]="norm.boot" 
+meth[c("appCat.utilities")]="norm.boot"
+
+```
+
+
+**This is the imputation part**
+
+```{r}
+set.seed(103)
+imputed = mice(stats, method='cart', predictorMatrix=predM, m=5)
+```
+
+Saving the imputed data
+
+```{r}
+imputed <- complete(imputed) 
+```
+
+In here I check if everything was filled in 
+
+```{r}
+sapply(imputed, function(x) sum(is.na(x)))
+```
+
+Write predicted data to a csv
+
+```{r}
+write.table(imputed, file = "01_imputed.csv", sep = ", ", row.names=FALSE) #print into csv
+```
+
+```{r}
+```
+
+
+
+

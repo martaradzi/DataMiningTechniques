@@ -1,5 +1,5 @@
 ---
-title: "Data imputation and correlation"
+title: "Data correlation"
 author: "Marta"
 date: "April 8, 2019"
 output:
@@ -29,10 +29,10 @@ stats[1] <- NULL
 
 ```{r}
 library(corrplot)
-M<-cor(stats)
+M<-cor(imputed)
 corrplot(M, method="color") # fill matrix
 corrplot(M, type="lower") #half matrix
-write.table(M, file = "dataCorrelation.csv", sep = ", ") #print into csv
+write.table(M, file = "dataCorrelation.csv", sep = ", ", row.names=FALSE) #print into csv
 ```
 
 
