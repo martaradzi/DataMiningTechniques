@@ -22,7 +22,9 @@ Reading in the data. Don't know how to do all at once so I'll do that later
 
 ```{r}
 stats <- read.csv("01_compressed.csv", header=TRUE, sep=",")
-
+stats[12] <- NULL #drop games
+stats[12] <- NULL #drop games
+stats[18] <- NULL #drop weather
 #head(stats)
 ```
 
@@ -50,8 +52,8 @@ stats <- stats %>%
         appCat.builtin = as.numeric(appCat.builtin),
         appCat.communication = as.numeric(appCat.communication),
         appCat.entertainment = as.numeric(appCat.entertainment),
-        appCat.finance  = as.numeric(appCat.finance ),
-        appCat.game = as.numeric(appCat.game),
+        #appCat.finance  = as.numeric(appCat.finance ),
+        #appCat.game = as.numeric(appCat.game),
         appCat.office = as.numeric(appCat.office),
         appCat.other = as.numeric(appCat.other),
         appCat.social = as.numeric(appCat.social),
@@ -59,7 +61,7 @@ stats <- stats %>%
         appCat.unknown = as.numeric(appCat.unknown),
         appCat.utilities = as.numeric(appCat.utilities),
         appCat.utilities   = as.numeric(appCat.utilities ),
-        appCat.weather = as.numeric(appCat.weather),
+        #appCat.weather = as.numeric(appCat.weather),
         day_0 = as.integer(day_0),
         day_1 = as.integer(day_1),
         day_2 = as.integer(day_2),
@@ -101,7 +103,8 @@ predM[, c("day_6")]=0
 Skipping variable for imputing - YOU MIGHT NEED TO ADD SOMETHING HERE
 
 ```{r}
-meth[c("appCat.weather")]=""
+#meth[c("appCat.weather")]=""
+#meth[c("appCat.game")]=""
 ```
 
 Setting method for imputing - choose which method do you want the variables to be predicted with
@@ -109,7 +112,7 @@ https://www.rdocumentation.org/packages/mice/versions/3.4.0/topics/mice
 
 
 ```{r} 
-meth[c("mood")]="norm.predict" 
+meth[c("mood")]="norm.boot" 
 meth[c("circumplex.arousal")]="norm.boot" 
 meth[c("circumplex.valence")]="norm.boot"
 meth[c("activity")]="norm.boot" 
@@ -119,8 +122,7 @@ meth[c("sms")]="norm.boot"
 meth[c("appCat.builtin")]="norm.boot" 
 meth[c("appCat.communication")]="norm.boot"
 meth[c("appCat.entertainment")]="norm.boot" 
-meth[c("appCat.finance")]="norm.boot" 
-meth[c("appCat.game")]="norm.boot"
+#meth[c("appCat.finance")]="norm.nob" 
 meth[c("appCat.office")]="norm.boot" 
 meth[c("appCat.other")]="norm.boot" 
 meth[c("appCat.social")]="norm.boot"
@@ -134,7 +136,7 @@ meth[c("appCat.utilities")]="norm.boot"
 **This is the imputation part**
 
 ```{r}
-set.seed(103)
+set.seed(500)
 imputed = mice(stats, method='cart', predictorMatrix=predM, m=5)
 ```
 
@@ -157,6 +159,89 @@ write.table(imputed, file = "01_imputed.csv", sep = ", ", row.names=FALSE) #prin
 ```
 
 ```{r}
+rm(list=ls())
+
+inpath = "33_compressed.csv"
+outpath = "33_imputed.csv"
+
+stats <- read.csv(inpath, header=TRUE, sep=",")
+stats[12] <- NULL #drop games
+stats[12] <- NULL #drop games
+stats[18] <- NULL #drop weather
+
+library(dplyr) 
+stats <- stats %>%
+    mutate(
+        time = as.Date(time),
+        mood = as.numeric(mood),
+        circumplex.arousal = as.numeric( circumplex.arousal),
+        circumplex.valence = as.numeric(circumplex.valence),
+        activity = as.numeric(activity),
+        screen = as.numeric(screen),
+        call = as.numeric(call),
+        sms = as.numeric(sms),
+        appCat.builtin = as.numeric(appCat.builtin),
+        appCat.communication = as.numeric(appCat.communication),
+        appCat.entertainment = as.numeric(appCat.entertainment),
+        #appCat.finance  = as.numeric(appCat.finance ),
+        #appCat.game = as.numeric(appCat.game),
+        appCat.office = as.numeric(appCat.office),
+        appCat.other = as.numeric(appCat.other),
+        appCat.social = as.numeric(appCat.social),
+        appCat.travel  = as.numeric(appCat.travel ),
+        appCat.unknown = as.numeric(appCat.unknown),
+        appCat.utilities = as.numeric(appCat.utilities),
+        appCat.utilities   = as.numeric(appCat.utilities ),
+        #appCat.weather = as.numeric(appCat.weather),
+        day_0 = as.integer(day_0),
+        day_1 = as.integer(day_1),
+        day_2 = as.integer(day_2),
+        day_3 = as.integer(day_3),
+        day_4 = as.integer(day_4),
+        day_5 = as.integer(day_5),
+        day_6 = as.integer(day_6)
+                                        
+    )
+
+library(mice)
+
+init = mice(stats, maxit=0) 
+meth = init$method
+predM = init$predictorMatrix
+
+predM[, c("time")]=0
+predM[, c("day_0")]=0
+predM[, c("day_1")]=0
+predM[, c("day_2")]=0
+predM[, c("day_3")]=0
+predM[, c("day_4")]=0
+predM[, c("day_5")]=0
+predM[, c("day_6")]=0
+
+meth[c("mood")]="norm.boot" 
+meth[c("circumplex.arousal")]="norm.boot" 
+meth[c("circumplex.valence")]="norm.boot"
+meth[c("activity")]="norm.boot" 
+meth[c("screen")]="norm.boot" 
+meth[c("call")]="norm.boot"
+meth[c("sms")]="norm.boot" 
+meth[c("appCat.builtin")]="norm.boot" 
+meth[c("appCat.communication")]="norm.boot"
+meth[c("appCat.entertainment")]="norm.boot" 
+#meth[c("appCat.finance")]="norm.nob" 
+meth[c("appCat.office")]="norm.boot" 
+meth[c("appCat.other")]="norm.boot" 
+meth[c("appCat.social")]="norm.boot"
+meth[c("appCat.travel")]="norm.boot" 
+meth[c("appCat.unknown")]="norm.boot" 
+meth[c("appCat.utilities")]="norm.boot"
+
+set.seed(500)
+imputed = mice(stats, method='cart', predictorMatrix=predM, m=5)
+
+imputed <- complete(imputed) 
+imputed[is.na(imputed)] <- 0 # substituting NaN values of empty columns for 0
+write.table(imputed, file = outpath, sep = ", ", row.names=FALSE) #print into csv
 ```
 
 
