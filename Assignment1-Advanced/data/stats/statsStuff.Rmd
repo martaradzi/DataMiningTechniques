@@ -1,0 +1,15 @@
+---
+title: "Data imputation and correlation"
+output: html_notebook
+---
+
+
+```{r}
+getwd()
+stats <- read.csv("AllStatsFrequency.csv")
+install.packages("corrplot")
+library(corrplot)
+M<-cor(mtcars)
+corrplot(M, method="color")
+corrplot(M, type="lower")
+```
