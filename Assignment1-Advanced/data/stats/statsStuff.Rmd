@@ -1,15 +1,43 @@
 ---
 title: "Data imputation and correlation"
-output: html_notebook
+author: "Marta"
+date: "April 8, 2019"
+output:
+  pdf_document: default
+  html_document: default
 ---
-
+Get path 
 
 ```{r}
 getwd()
-stats <- read.csv("AllStatsFrequency.csv")
+```
+
+
+##This makes corelation 
+
+installing packages for correlation 
+```{r}
 install.packages("corrplot")
+```
+
+
+Read in the file which you want the correlation matrix for, set first column (patient number) to null
+```{r}
+stats <- read.csv("combined_csv.csv")
+stats[1] <- NULL 
+```
+
+```{r}
 library(corrplot)
-M<-cor(mtcars)
-corrplot(M, method="color")
-corrplot(M, type="lower")
+M<-cor(stats)
+corrplot(M, method="color") # fill matrix
+corrplot(M, type="lower") #half matrix
+write.table(M, file = "dataCorrelation.csv", sep = ", ") #print into csv
+```
+
+
+
+This below removes variables (used for debuggining)
+```{r}
+rm(list=ls())
 ```

@@ -239,11 +239,52 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
+<p>Get path</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2V0d2QoKVxuYGBgIn0= -->
+<pre class="r"><code>getwd()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This makes corelation</p>
+<p>installing packages for correlation</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zdGFsbC5wYWNrYWdlcyhcImNvcnJwbG90XCIpXG5gYGAifQ== -->
+<pre class="r"><code>install.packages(&quot;corrplot&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Read in the file which you want the correlation matrix for, set first column (patient number) to null</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RhdHMgPC0gcmVhZC5jc3YoXCJBbGxTdGF0c0ZyZXF1ZW5jeS5jc3ZcIilcbnN0YXRzWzFdIDwtIE5VTEwgXG5gYGAifQ== -->
+<pre class="r"><code>stats &lt;- read.csv(&quot;AllStatsFrequency.csv&quot;)
+stats[1] &lt;- NULL </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShjb3JycGxvdClcbk08LWNvcihzdGF0cylcbmNvcnJwbG90KE0sIG1ldGhvZD1cImNvbG9yXCIpICMgZmlsbCBtYXRyaXhcbmNvcnJwbG90KE0sIHR5cGU9XCJsb3dlclwiKSAjaGFsZiBtYXRyaXhcbndyaXRlLnRhYmxlKE4sIGZpbGUgPSBcImRhdGFDb3JyZWxhdGlvbi5jc3ZcIiwgc2VwID0gXCIsIFwiKSAjcHJpbnQgaW50byBjc3ZcbmBgYCJ9 -->
+<pre class="r"><code>library(corrplot)
+M&lt;-cor(stats)
+corrplot(M, method=&quot;color&quot;) # fill matrix
+corrplot(M, type=&quot;lower&quot;) #half matrix
+write.table(N, file = &quot;dataCorrelation.csv&quot;, sep = &quot;, &quot;) #print into csv</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This below removes variables (used for debuggining)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdD1scygpKVxuYGBgIn0= -->
+<pre class="r"><code>rm(list=ls())</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgaW1wdXRhdGlvbiBhbmQgY29ycmVsYXRpb24iDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCmBgYHtyfQ0KZ2V0d2QoKQ0Kc3RhdHMgPC0gcmVhZC5jc3YoIkFsbFN0YXRzRnJlcXVlbmN5LmNzdiIpDQppbnN0YWxsLnBhY2thZ2VzKCJjb3JycGxvdCIpDQpsaWJyYXJ5KGNvcnJwbG90KQ0KTTwtY29yKG10Y2FycykNCmNvcnJwbG90KE0sIG1ldGhvZD0iY29sb3IiKQ0KY29ycnBsb3QoTSwgdHlwZT0ibG93ZXIiKQ0KYGBg</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgaW1wdXRhdGlvbiBhbmQgY29ycmVsYXRpb24iDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KR2V0IHBhdGggDQoNCmBgYHtyfQ0KZ2V0d2QoKQ0KYGBgDQoNClRoaXMgbWFrZXMgY29yZWxhdGlvbiANCg0KDQoNCg0KDQppbnN0YWxsaW5nIHBhY2thZ2VzIGZvciBjb3JyZWxhdGlvbiANCmBgYHtyfQ0KaW5zdGFsbC5wYWNrYWdlcygiY29ycnBsb3QiKQ0KYGBgDQoNCg0KUmVhZCBpbiB0aGUgZmlsZSB3aGljaCB5b3Ugd2FudCB0aGUgY29ycmVsYXRpb24gbWF0cml4IGZvciwgc2V0IGZpcnN0IGNvbHVtbiAocGF0aWVudCBudW1iZXIpIHRvIG51bGwNCmBgYHtyfQ0Kc3RhdHMgPC0gcmVhZC5jc3YoIkFsbFN0YXRzRnJlcXVlbmN5LmNzdiIpDQpzdGF0c1sxXSA8LSBOVUxMIA0KYGBgDQoNCmBgYHtyfQ0KbGlicmFyeShjb3JycGxvdCkNCk08LWNvcihzdGF0cykNCmNvcnJwbG90KE0sIG1ldGhvZD0iY29sb3IiKSAjIGZpbGwgbWF0cml4DQpjb3JycGxvdChNLCB0eXBlPSJsb3dlciIpICNoYWxmIG1hdHJpeA0Kd3JpdGUudGFibGUoTiwgZmlsZSA9ICJkYXRhQ29ycmVsYXRpb24uY3N2Iiwgc2VwID0gIiwgIikgI3ByaW50IGludG8gY3N2DQpgYGANCg0KDQoNClRoaXMgYmVsb3cgcmVtb3ZlcyB2YXJpYWJsZXMgKHVzZWQgZm9yIGRlYnVnZ2luaW5nKQ0KYGBge3J9DQpybShsaXN0PWxzKCkpDQpgYGA=</div>
 
 
 
