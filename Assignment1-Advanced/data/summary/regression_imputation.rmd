@@ -105,6 +105,8 @@ meth[c("appCat.weather")]=""
 ```
 
 Setting method for imputing - choose which method do you want the variables to be predicted with
+https://www.rdocumentation.org/packages/mice/versions/3.4.0/topics/mice
+
 
 ```{r} 
 meth[c("mood")]="norm.predict" 
