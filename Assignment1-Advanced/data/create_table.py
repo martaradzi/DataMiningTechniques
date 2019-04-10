@@ -14,10 +14,8 @@ current_target = int(sys.argv[1])
 
 for filename in all_files:
     df = pd.read_csv(filename)
-    df['time'] = pd.to_datetime(df['time'])
 
-    patient_number = filename[8:10]
-    patient = 'Patient' + patient_number
+    patient = 'Patient' + filename[8:10]
     period = []
     target_mood = []
 
@@ -31,6 +29,7 @@ for filename in all_files:
         period.append('t = ' + str(current_target-rolling_range) + '-' + str(current_target))
         current_target += 1
 
+    # need to shift the target moods up one
     target_mood.pop(0)
     target_mood.append(None)
 
@@ -56,8 +55,8 @@ for filename in all_files:
         'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 'target_mood':target_mood}
 														
     out = pd.DataFrame(data)
-
     to_drop = []
+    
     for x in range(0,rolling_range-1):
         to_drop.append(x)
 
