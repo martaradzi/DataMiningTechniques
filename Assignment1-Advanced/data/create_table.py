@@ -3,7 +3,8 @@ import glob
 import numpy as np
 import sys
 
-all_files = glob.glob('summary/*01_imputed.csv')
+all_files = glob.glob('summary/*_imputed.csv')
+out = pd.DataFrame()
 
 if len(sys.argv) != 2:
     print("usage: python3 create_table.py <day-range>")
@@ -54,13 +55,13 @@ for filename in all_files:
         'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
         'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 'target_mood':target_mood}
 														
-    out = pd.DataFrame(data)
+    temp = pd.DataFrame(data)
     to_drop = []
     
     for x in range(0,rolling_range-1):
         to_drop.append(x)
 
-    out.drop(out.index[[len(df)-1]], inplace=True)
-    out.drop(out.index[to_drop], inplace=True)
+    temp.drop(temp.index[[len(df)-1]], inplace=True)
+    temp.drop(temp.index[to_drop], inplace=True)
 
-    print(out)
+    print(temp)
