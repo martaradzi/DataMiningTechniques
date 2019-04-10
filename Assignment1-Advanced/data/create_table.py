@@ -5,8 +5,8 @@ import sys
 
 all_files = glob.glob('summary/*01_imputed.csv')
 
-if len(sys.argv) != 3:
-    print("usage: python3 create_table.py <# days: int> <outfile: no extension>")
+if len(sys.argv) != 2:
+    print("usage: python3 create_table.py <day-range>")
     exit(1)
 
 rolling_range = int(sys.argv[1])
@@ -67,4 +67,3 @@ for filename in all_files:
     out.drop(out.index[to_drop], inplace=True)
 
     print(out)
-    
