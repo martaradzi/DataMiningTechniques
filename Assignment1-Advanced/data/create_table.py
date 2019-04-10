@@ -12,8 +12,6 @@ if len(sys.argv) != 2:
 rolling_range = int(sys.argv[1])
 current_target = int(sys.argv[1])
 
-column_names = ['mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 'appCat.office','appCat.other', 'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'target_mood']
-
 for filename in all_files:
     df = pd.read_csv(filename)
     df['time'] = pd.to_datetime(df['time'])
