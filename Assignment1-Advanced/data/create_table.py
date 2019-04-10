@@ -11,11 +11,11 @@ if len(sys.argv) != 2:
     exit(1)
 
 rolling_range = int(sys.argv[1])
-current_target = int(sys.argv[1])
 
 for filename in all_files:
     df = pd.read_csv(filename)
 
+    current_target = int(sys.argv[1])
     patient = 'Patient' + filename[8:10]
     period = []
     target_mood = []
@@ -64,4 +64,6 @@ for filename in all_files:
     temp.drop(temp.index[[len(df)-1]], inplace=True)
     temp.drop(temp.index[to_drop], inplace=True)
 
-    print(temp)
+    out = pd.concat([out, temp])
+
+out.to_csv("table.csv")
