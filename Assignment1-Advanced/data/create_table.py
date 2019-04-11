@@ -2,6 +2,8 @@ import pandas as pd
 import glob
 import numpy as np
 import sys
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 all_files = glob.glob('summary/*_imputed.csv')
 out = pd.DataFrame()
@@ -66,4 +68,11 @@ for filename in all_files:
 
     out = pd.concat([out, temp])
 
-out.to_csv("table.csv")
+out.to_csv('table_' + sys.argv[1] + '.csv')
+
+corr = out.corr()
+plt.matshow(corr)
+plt.xticks(range(len(corr.columns)), corr.columns, rotation='45')
+plt.yticks(range(len(corr.columns)), corr.columns)
+plt.savefig('corr_' + sys.argv[1] + '.png')
+plt.show()
