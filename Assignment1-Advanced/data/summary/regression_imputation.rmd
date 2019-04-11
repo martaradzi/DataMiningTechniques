@@ -161,8 +161,8 @@ write.table(imputed, file = "01_imputed.csv", sep = ", ", row.names=FALSE) #prin
 ```{r}
 rm(list=ls())
 
-inpath = "33_compressed.csv"
-outpath = "33_imputed_all_variables.csv"
+inpath = "01_compressed.csv"
+outpath = "01_imputed.csv"
 
 stats <- read.csv(inpath, header=TRUE, sep=",")
 #stats[12] <- NULL #drop games
