@@ -162,12 +162,12 @@ write.table(imputed, file = "01_imputed.csv", sep = ", ", row.names=FALSE) #prin
 rm(list=ls())
 
 inpath = "33_compressed.csv"
-outpath = "33_imputed.csv"
+outpath = "33_imputed_all_variables.csv"
 
 stats <- read.csv(inpath, header=TRUE, sep=",")
-stats[12] <- NULL #drop games
-stats[12] <- NULL #drop games
-stats[18] <- NULL #drop weather
+#stats[12] <- NULL #drop games
+#stats[12] <- NULL #drop games
+#stats[18] <- NULL #drop weather
 
 library(dplyr) 
 stats <- stats %>%
@@ -183,8 +183,8 @@ stats <- stats %>%
         appCat.builtin = as.numeric(appCat.builtin),
         appCat.communication = as.numeric(appCat.communication),
         appCat.entertainment = as.numeric(appCat.entertainment),
-        #appCat.finance  = as.numeric(appCat.finance ),
-        #appCat.game = as.numeric(appCat.game),
+        appCat.finance  = as.numeric(appCat.finance ),
+        appCat.game = as.numeric(appCat.game),
         appCat.office = as.numeric(appCat.office),
         appCat.other = as.numeric(appCat.other),
         appCat.social = as.numeric(appCat.social),
@@ -192,7 +192,7 @@ stats <- stats %>%
         appCat.unknown = as.numeric(appCat.unknown),
         appCat.utilities = as.numeric(appCat.utilities),
         appCat.utilities   = as.numeric(appCat.utilities ),
-        #appCat.weather = as.numeric(appCat.weather),
+        appCat.weather = as.numeric(appCat.weather),
         day_0 = as.integer(day_0),
         day_1 = as.integer(day_1),
         day_2 = as.integer(day_2),
@@ -218,6 +218,9 @@ predM[, c("day_4")]=0
 predM[, c("day_5")]=0
 predM[, c("day_6")]=0
 
+#meth[c("appCat.weather", "appCat.game")]=""
+#meth[c("appCat.game")]=""
+
 meth[c("mood")]="norm.boot" 
 meth[c("circumplex.arousal")]="norm.boot" 
 meth[c("circumplex.valence")]="norm.boot"
@@ -228,7 +231,7 @@ meth[c("sms")]="norm.boot"
 meth[c("appCat.builtin")]="norm.boot" 
 meth[c("appCat.communication")]="norm.boot"
 meth[c("appCat.entertainment")]="norm.boot" 
-#meth[c("appCat.finance")]="norm.nob" 
+meth[c("appCat.finance")]="norm.nob" 
 meth[c("appCat.office")]="norm.boot" 
 meth[c("appCat.other")]="norm.boot" 
 meth[c("appCat.social")]="norm.boot"
@@ -240,8 +243,8 @@ set.seed(500)
 imputed = mice(stats, method='cart', predictorMatrix=predM, m=5)
 
 imputed <- complete(imputed) 
-imputed[is.na(imputed)] <- 0 # substituting NaN values of empty columns for 0
-write.table(imputed, file = outpath, sep = ", ", row.names=FALSE) #print into csv
+#imputed[is.na(imputed)] <- 0 # substituting NaN values of empty columns for 0
+write.table(imputed, file = outpath, sep = ",", row.names=FALSE) #print into csv
 ```
 
 
