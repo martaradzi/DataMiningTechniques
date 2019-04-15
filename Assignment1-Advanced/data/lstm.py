@@ -10,19 +10,23 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
-from math import sqrt
+# from math import sqrt
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import TimeSeriesSplit
+# from sklearn.model_selection import TimeSeriesSplit
 
 if len(sys.argv) != 2:
     print("usage: python3 create_table.py <filename>")
     exit(1)
 
 df = pd.read_csv(sys.argv[1])
+df.fillna(0, inplace=True)
 
-# transform data to be stationary
-raw_values = df.values
-diff_values = difference(raw_values, 1)
+# print(df.head())
 
-print(raw_values)
-print(diff_values)
+target = np.array(df['target_mood'], dtype = float)
+del df['target_mood']
+del df['patientno']
+del df['period']
+data = np.array(df, dtype = float)
+
+print(data[0])

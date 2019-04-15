@@ -5,6 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 
 all_files = glob.glob('summary/*_imputed.csv')
+# all_files = glob.glob('summary/*01_imputed.csv')
 out = pd.DataFrame()
 
 if len(sys.argv) != 2:
@@ -39,18 +40,18 @@ for filename in all_files:
     v2 = (df['circumplex.arousal'].rolling(rolling_range).mean() + 2) * 0.25
     v3 = (df['circumplex.valence'].rolling(rolling_range).mean() +1) * 0.25
     v4 = df['activity'].rolling(rolling_range).mean()
-    v5 = df['screen'].rolling(rolling_range).sum()
-    v6 = df['call'].rolling(rolling_range).sum()
-    v7 = df['sms'].rolling(rolling_range).sum()
-    v8 = df['appCat.builtin'].rolling(rolling_range).sum()
-    v9 = df['appCat.communication'].rolling(rolling_range).sum()
-    v10 = df['appCat.entertainment'].rolling(rolling_range).sum()
-    v11 = df['appCat.office'].rolling(rolling_range).sum()
-    v12 = df['appCat.other'].rolling(rolling_range).sum()
-    v13 = df['appCat.social'].rolling(rolling_range).sum()
-    v14 = df['appCat.travel'].rolling(rolling_range).sum()
-    v15 = df['appCat.unknown'].rolling(rolling_range).sum()
-    v16 = df['appCat.utilities'].rolling(rolling_range).sum()
+    v5 = df['screen'].rolling(rolling_range).mean()
+    v6 = df['call'].rolling(rolling_range).mean()
+    v7 = df['sms'].rolling(rolling_range).mean()
+    v8 = df['appCat.builtin'].rolling(rolling_range).mean()
+    v9 = df['appCat.communication'].rolling(rolling_range).mean()
+    v10 = df['appCat.entertainment'].rolling(rolling_range).mean()
+    v11 = df['appCat.office'].rolling(rolling_range).mean()
+    v12 = df['appCat.other'].rolling(rolling_range).mean()
+    v13 = df['appCat.social'].rolling(rolling_range).mean()
+    v14 = df['appCat.travel'].rolling(rolling_range).mean()
+    v15 = df['appCat.unknown'].rolling(rolling_range).mean()
+    v16 = df['appCat.utilities'].rolling(rolling_range).mean()
 
     data = {'patientno':patient, 'period': period, 'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
         'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
