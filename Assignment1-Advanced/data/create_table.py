@@ -4,7 +4,7 @@ import numpy as np
 import sys
 import matplotlib.pyplot as plt
 
-all_files = glob.glob('summary/*01_imputed.csv')
+all_files = glob.glob('summary/*_imputed.csv')
 out = pd.DataFrame()
 
 if len(sys.argv) != 2:
