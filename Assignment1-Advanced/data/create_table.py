@@ -3,7 +3,6 @@ import glob
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 all_files = glob.glob('summary/*_imputed.csv')
 out = pd.DataFrame()
@@ -37,8 +36,8 @@ for filename in all_files:
     target_mood.append(None)
 
     v1 = df['mood'].rolling(rolling_range).mean()
-    v2 = df['circumplex.arousal'].rolling(rolling_range).mean()
-    v3 = df['circumplex.valence'].rolling(rolling_range).mean()
+    v2 = (df['circumplex.arousal'].rolling(rolling_range).mean() + 2) * 0.25
+    v3 = (df['circumplex.valence'].rolling(rolling_range).mean() +1) * 0.25
     v4 = df['activity'].rolling(rolling_range).mean()
     v5 = df['screen'].rolling(rolling_range).sum()
     v6 = df['call'].rolling(rolling_range).sum()
@@ -68,11 +67,17 @@ for filename in all_files:
 
     out = pd.concat([out, temp])
 
+    plt.subplot(2, 1, 1)
+    plt.plot(v1)
+    plt.subplot(2, 1, 2)
+    plt.plot(v5)
+    plt.show()
+
 out.to_csv('table_' + sys.argv[1] + '.csv')
 
-corr = out.corr()
-plt.matshow(corr)
-plt.xticks(range(len(corr.columns)), corr.columns, rotation='45')
-plt.yticks(range(len(corr.columns)), corr.columns)
-plt.savefig('corr_' + sys.argv[1] + '.png')
-plt.show()
+# corr = out.corr()
+# plt.matshow(corr)
+# plt.xticks(range(len(corr.columns)), corr.columns, rotation='vertical')
+# plt.yticks(range(len(corr.columns)), corr.columns)
+# plt.savefig('corr_' + sys.argv[1] + '.png')
+# plt.show()
