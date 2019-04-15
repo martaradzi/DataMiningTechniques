@@ -4,7 +4,7 @@ import numpy as np
 import sys
 import matplotlib.pyplot as plt
 
-all_files = glob.glob('summary/*_imputed.csv')
+all_files = glob.glob('summary/*01_imputed.csv')
 out = pd.DataFrame()
 
 if len(sys.argv) != 2:
@@ -55,6 +55,11 @@ for filename in all_files:
     data = {'patientno':patient, 'period': period, 'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
         'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
         'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 'target_mood':target_mood}
+
+    # patient-number and time-period dropped for test/train sets
+    # data = {'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
+    #     'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
+    #     'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 'target_mood':target_mood}
 														
     temp = pd.DataFrame(data)
     to_drop = []
@@ -67,13 +72,13 @@ for filename in all_files:
 
     out = pd.concat([out, temp])
 
-    plt.subplot(2, 1, 1)
-    plt.plot(v1)
-    plt.subplot(2, 1, 2)
-    plt.plot(v5)
-    plt.show()
+    # plt.subplot(2, 1, 1)
+    # plt.plot(v1)
+    # plt.subplot(2, 1, 2)
+    # plt.plot(v5)
+    # plt.show()
 
-out.to_csv('table_' + sys.argv[1] + '.csv')
+out.to_csv('table_' + sys.argv[1] + '.csv', index=False)
 
 # corr = out.corr()
 # plt.matshow(corr)
