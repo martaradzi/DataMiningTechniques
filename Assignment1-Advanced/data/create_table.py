@@ -38,7 +38,7 @@ for filename in all_files:
 
     v1 = df['mood'].rolling(rolling_range).mean()
     v2 = (df['circumplex.arousal'].rolling(rolling_range).mean() + 2) * 0.25
-    v3 = (df['circumplex.valence'].rolling(rolling_range).mean() +1) * 0.25
+    v3 = (df['circumplex.valence'].rolling(rolling_range).mean() + 2) * 0.25
     v4 = df['activity'].rolling(rolling_range).mean()
     v5 = df['screen'].rolling(rolling_range).mean()
     v6 = df['call'].rolling(rolling_range).mean()
@@ -71,7 +71,18 @@ for filename in all_files:
     temp.drop(temp.index[[len(df)-1]], inplace=True)
     temp.drop(temp.index[to_drop], inplace=True)
 
-    out = pd.concat([out, temp])
+    variables= ['mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 'appCat.finance', 'appCat.game', 'appCat.office','appCat.other', 'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'appCat.weather']
+    
+    for variable in variables:
+    #print (df[variable].mean())
+        if variable in temp.columns:
+            meanVal = temp[variable].mean()
+            stdVal = temp[variable].std()
+            temp[variable] = (temp[variable] - meanVal) / stdVal
+
+    temp.to_csv('patient_data/' + sys.argv[1] + '_' + patient + '.csv', index=False)
+
+    # out = pd.concat([out, temp])
 
     # plt.subplot(2, 1, 1)
     # plt.plot(v1)
@@ -79,7 +90,8 @@ for filename in all_files:
     # plt.plot(v5)
     # plt.show()
 
-out.to_csv('table_' + sys.argv[1] + '.csv', index=False)
+# out.to_csv('table_' + sys.argv[1] + '.csv', index=False)
+# out.to_csv('tableX_' + sys.argv[1] + '.csv', index=False)
 
 # corr = out.corr()
 # plt.matshow(corr)
