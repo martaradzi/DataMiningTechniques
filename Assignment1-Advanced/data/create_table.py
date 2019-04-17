@@ -21,6 +21,7 @@ for filename in all_files:
     patient = 'Patient' + filename[8:10]
     period = []
     target_mood = []
+    day_of_week = [[]]
 
     for x in range(0, rolling_range-1):
         target_mood.append(None)
@@ -52,15 +53,23 @@ for filename in all_files:
     v14 = df['appCat.travel'].rolling(rolling_range).mean()
     v15 = df['appCat.unknown'].rolling(rolling_range).mean()
     v16 = df['appCat.utilities'].rolling(rolling_range).mean()
-
-    data = {'patientno':patient, 'period': period, 'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
+    v17 = df['appCat.finance'].rolling(rolling_range).mean()
+    v18 = df['appCat.game'].rolling(rolling_range).mean()
+    v19 = df['appCat.weather'].rolling(rolling_range).mean()
+    
+    # one-hot day of week
+    v20 = (df['day_0'].rolling(rolling_range).sum() > 0).astype(int)
+    v21 = (df['day_1'].rolling(rolling_range).sum() > 0).astype(int)
+    v22 = (df['day_2'].rolling(rolling_range).sum() > 0).astype(int)
+    v23 = (df['day_3'].rolling(rolling_range).sum() > 0).astype(int)
+    v24 = (df['day_4'].rolling(rolling_range).sum() > 0).astype(int)
+    v25 = (df['day_5'].rolling(rolling_range).sum() > 0).astype(int)
+    v26 = (df['day_6'].rolling(rolling_range).sum() > 0).astype(int)
+    							
+    data = {'patientno':patient, 'period':period, 'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
         'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
-        'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 'target_mood':target_mood}
-
-    # patient-number and time-period dropped for test/train sets
-    # data = {'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
-    #     'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
-    #     'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 'target_mood':target_mood}
+        'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 
+        'appCat.finance':v17, 'appCat.game':v18, 'appCat.weather':v19, 'mon':v20, 'tue':v21, 'wed':v22, 'thu':v23, 'fri':v24, 'sat':v25, 'sun':v26, 'target_mood':target_mood}
 														
     temp = pd.DataFrame(data)
     to_drop = []
@@ -71,18 +80,23 @@ for filename in all_files:
     temp.drop(temp.index[[len(df)-1]], inplace=True)
     temp.drop(temp.index[to_drop], inplace=True)
 
-    variables= ['mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 'appCat.finance', 'appCat.game', 'appCat.office','appCat.other', 'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'appCat.weather']
+    variables = ['mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 
+        'appCat.finance', 'appCat.game', 'appCat.office','appCat.other', 'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'appCat.weather']
     
     for variable in variables:
-    #print (df[variable].mean())
         if variable in temp.columns:
             meanVal = temp[variable].mean()
             stdVal = temp[variable].std()
             temp[variable] = (temp[variable] - meanVal) / stdVal
 
-    temp.to_csv('patient_data/' + sys.argv[1] + '_' + patient + '.csv', index=False)
+    variables_final = ['patientno', 'period', 'mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 
+        'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 'appCat.finance', 'appCat.game', 'appCat.office','appCat.other', 
+        'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'appCat.weather', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun', 'target_mood']
 
-    # out = pd.concat([out, temp])
+
+    temp = temp[variables_final] # rearrange columns
+    # temp.to_csv('patient_data/' + sys.argv[1] + '_' + patient + '.csv', index=False)
+    out = pd.concat([out, temp])
 
     # plt.subplot(2, 1, 1)
     # plt.plot(v1)
@@ -90,7 +104,7 @@ for filename in all_files:
     # plt.plot(v5)
     # plt.show()
 
-# out.to_csv('table_' + sys.argv[1] + '.csv', index=False)
+out.to_csv('table_' + sys.argv[1] + '.csv', index=False)
 # out.to_csv('tableX_' + sys.argv[1] + '.csv', index=False)
 
 # corr = out.corr()
