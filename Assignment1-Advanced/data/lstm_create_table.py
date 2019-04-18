@@ -29,55 +29,53 @@ for filename in all_files:
         target_mood.append(None)
         period.append(None)
 
-    # loop for target_moods and time-periods to add to df
+    # loop for target_moods to add to df
     for x in range(rolling_range-1, len(df)):
         target_mood.append(df.iloc[x][1])
-        period.append('t = ' + str(current_target-rolling_range) + '-' + str(current_target))
         current_target += 1
 
     # need to shift the target moods up one
     target_mood.pop(0)
     target_mood.append(None)
 
-    v1 = df['mood'].rolling(rolling_range).mean()
-    v2 = (df['circumplex.arousal'].rolling(rolling_range).mean() + 2) * 0.25
-    v3 = (df['circumplex.valence'].rolling(rolling_range).mean() + 2) * 0.25
-    v4 = df['activity'].rolling(rolling_range).mean()
-    v5 = df['screen'].rolling(rolling_range).mean()
-    v6 = df['call'].rolling(rolling_range).mean()
-    v7 = df['sms'].rolling(rolling_range).mean()
-    v8 = df['appCat.builtin'].rolling(rolling_range).mean()
-    v9 = df['appCat.communication'].rolling(rolling_range).mean()
-    v10 = df['appCat.entertainment'].rolling(rolling_range).mean()
-    v11 = df['appCat.office'].rolling(rolling_range).mean()
-    v12 = df['appCat.other'].rolling(rolling_range).mean()
-    v13 = df['appCat.social'].rolling(rolling_range).mean()
-    v14 = df['appCat.travel'].rolling(rolling_range).mean()
-    v15 = df['appCat.unknown'].rolling(rolling_range).mean()
-    v16 = df['appCat.utilities'].rolling(rolling_range).mean()
-    v17 = df['appCat.finance'].rolling(rolling_range).mean()
-    v18 = df['appCat.game'].rolling(rolling_range).mean()
-    v19 = df['appCat.weather'].rolling(rolling_range).mean()
+    v1 = df['mood']
+    v2 = df['circumplex.arousal']
+    v3 = df['circumplex.valence']
+    v4 = df['activity']
+    v5 = df['screen']
+    v6 = df['call']
+    v7 = df['sms']
+    v8 = df['appCat.builtin']
+    v9 = df['appCat.communication']
+    v10 = df['appCat.entertainment']
+    v11 = df['appCat.office']
+    v12 = df['appCat.other']
+    v13 = df['appCat.social']
+    v14 = df['appCat.travel']
+    v15 = df['appCat.unknown']
+    v16 = df['appCat.utilities']
+    v17 = df['appCat.finance']
+    v18 = df['appCat.game']
+    v19 = df['appCat.weather']
     
     # one-hot day of week
-    v20 = (df['day_0'].rolling(rolling_range).sum() > 0).astype(int)
-    v21 = (df['day_1'].rolling(rolling_range).sum() > 0).astype(int)
-    v22 = (df['day_2'].rolling(rolling_range).sum() > 0).astype(int)
-    v23 = (df['day_3'].rolling(rolling_range).sum() > 0).astype(int)
-    v24 = (df['day_4'].rolling(rolling_range).sum() > 0).astype(int)
-    v25 = (df['day_5'].rolling(rolling_range).sum() > 0).astype(int)
-    v26 = (df['day_6'].rolling(rolling_range).sum() > 0).astype(int)
+    v20 = df['day_0']
+    v21 = df['day_1']
+    v22 = df['day_2']
+    v23 = df['day_3']
+    v24 = df['day_4']
+    v25 = df['day_5']
+    v26 = df['day_6']
 
     # one-hot patient number
     # v27 = []
     # for x in range(1, 33):
     #     if x == patient:
-    #         v27 = (df['p'+str(patient)].rolling(rolling_range).sum() > 0).astype(int)
-    #         print(x)
+    #         patientno = df['p'+str(patient)]
 
     patientno = 'p' + str(patient)
     							
-    data = { patientno:1, 'period':period, 'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
+    data = { patientno:1, 'mood':v1, 'circumplex.arousal':v2, 'circumplex.valence':v3, 'activity':v4, 'screen':v5, 
         'call':v6, 'sms':v7, 'appCat.builtin':v8, 'appCat.communication':v9, 'appCat.entertainment':v10, 'appCat.office':v11, 
         'appCat.other':v12, 'appCat.social':v13, 'appCat.travel':v14, 'appCat.unknown':v15, 'appCat.utilities':v16, 
         'appCat.finance':v17, 'appCat.game':v18, 'appCat.weather':v19, 'mon':v20, 'tue':v21, 'wed':v22, 'thu':v23, 'fri':v24, 'sat':v25, 'sun':v26, 'target_mood':target_mood }
@@ -97,7 +95,7 @@ for filename in all_files:
     #         stdVal = temp[variable].std()
     #         temp[variable] = (temp[variable] - meanVal) / stdVal
 
-    variables_final = [patientno, 'period', 'mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 
+    variables_final = [patientno, 'mood', 'circumplex.arousal', 'circumplex.valence', 'activity', 'screen', 'call', 'sms', 
         'appCat.builtin', 'appCat.communication', 'appCat.entertainment', 'appCat.finance', 'appCat.game', 'appCat.office','appCat.other', 
         'appCat.social', 'appCat.travel', 'appCat.unknown', 'appCat.utilities', 'appCat.weather', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun', 'target_mood']
 
@@ -111,8 +109,8 @@ for filename in all_files:
     # plt.plot(v5)
     # plt.show()
 
-# out.to_csv('LSTM_' + sys.argv[1] + '.csv', index = False)
-out.to_csv('table_' + sys.argv[1] + '.csv', index=False)
+out.to_csv('LSTM_window_' + sys.argv[1] + '.csv', index = False)
+# out.to_csv('tableX_' + sys.argv[1] + '.csv', index=False)
 
 # corr = out.corr()
 # plt.matshow(corr)
