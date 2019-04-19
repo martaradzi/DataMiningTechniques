@@ -1,0 +1,58 @@
+---
+title: "T-tests"
+output: html_notebook
+---
+
+#R script for the T-Test of the NN results and the Random Forest Results in comparison with the expected values of the mood
+
+
+Reading in the data
+```{r}
+#random forest data
+forest <- read.csv("forest_validation.csv", header=TRUE, sep=",")
+forest_pred = forest[, 2]
+forest_real = forest[,1]
+
+#nn data
+nn <- read.csv("Istm_validation.csv", header=TRUE, sep=",")
+nn_pred = nn[,1]
+nn_real = nn[,2]
+```
+
+Checking for normal distribution:
+
+```{r}
+mfrow=c(1, 2)
+hist(forest_pred, main = "forest pred")
+qqnorm(forest_pred)
+
+mfrow=c(1, 2)
+hist(forest_real, main = "forest pred")
+qqnorm(forest_real)
+
+mfrow=c(1, 2)
+hist(nn_pred, main = "forest pred")
+qqnorm(nn_pred)
+
+mfrow=c(1, 2)
+hist(nn_real, main = "forest pred")
+qqnorm(nn_pred)
+```
+
+
+Student T-test for forest
+```{r}
+t.test(forest_real, forest_pred,paired = FALSE, conf.level = 0.95)
+#t.test(forest_pred, forest_real)
+```
+
+
+Student T-test for nn
+```{r}
+t.test(nn_real, nn_pred, paired = FALSE, conf.level = 0.95)
+```
+
+Not paired T-test
+```{r}
+t.test(forest_pred, nn_pred)
+```
