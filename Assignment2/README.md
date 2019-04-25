@@ -28,7 +28,7 @@ You'll need to submit a single file, which ranks the properties belonging to a u
 - booking_bool (if the user booked it)
 - gross_booking_usd (transaction cost)
 
-#### ***** NDCG evaluates the top 40 results *****
+#### ***** NDCG evaluates the top 40 results per query *****
 
 ---
 
