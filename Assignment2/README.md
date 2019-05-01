@@ -5,15 +5,6 @@ You'll need to submit a single file, which ranks the properties belonging to a u
 | srch_id  |  prop_id | 
 |----------|----------| 
 | 2        |  7771    | 
-| 2        |  26540   | 
-| 2        |  25579   | 
-| 2        |  7374    | 
-| 2        |  131173  | 
-| 2        |  37331   | 
-| 2        |  27090   | 
-| 2        |  12938   | 
-| 2        |  78858   | 
-| 2        |  30434   | 
 | 2        |  91899   | 
 | 2        |  3105    | 
 | 2        |  6399    | 
@@ -35,6 +26,24 @@ You'll need to submit a single file, which ranks the properties belonging to a u
 ### Approach 1 (using Pandas)
 - read train data
    - set data types
+   
+- deleted the following data:
+   - srch_id
+   - date_time
+   
+   
+- Normalize:
+   - visitor_hist_starrating
+   - visitor_hist_adr_usd
+   - prop_starrating
+   - prop_review_score
+   - prop_location_score1
+   - prop_location_score2
+   - price_usd
+   - gross_booking_usd
+   - srch_query_affinity_score
+   - orig_destination_distance
+   - comp1_rate_percent_diff
 
 - chunk the data
    - group by id, cluster, isbooking
