@@ -34,11 +34,11 @@ You'll need to submit a single file, which ranks the properties belonging to a u
 
 ### Approach 1 (using Pandas)
 - read train data
-   [x] set data types
+[X] set data types
    
 - deleted the following data:
-   [] srch_id
-   [] date_time
+[ ] srch_id
+[ ] date_time
    
    
 - Normalize:
