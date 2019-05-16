@@ -65,3 +65,7 @@ You'll need to submit a single file, which ranks the properties belonging to a u
       - fill these with most popular overall hotel clusters
 
 - save submission as .csv
+
+
+
+With random forest we got 0.317 - 41st place at the time
